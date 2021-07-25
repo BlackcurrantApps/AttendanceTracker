@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  BLOCKCHAIN_ENDPOINT: "http://localhost:9545",
+  BLOCKCHAIN_CHAIN_ID: 5777,
+  CONTRACT_ADDRESS: "0x0697925f35b64a19b207360acC087C7D83b5f816",
 };
 
 /*
