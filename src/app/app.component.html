@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand">Attendance Tracker</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -17,72 +18,76 @@
   </div>
 </nav>
 <div class="container">
-  Contract Owner: {{this.chainService.contractOwnerAddress}}
   <div class="row mt-4">
     <div class="col">
-      <form>
+      <form #AddForm="ngForm" (ngSubmit)="this.addEmployee()">
         <h4>Add Employee</h4>
         <div class="mb-3">
           <label for="employeeId" class="form-label">Employee Id</label>
-          <input type="number" class="form-control" id="employeeId" aria-describedby="employeeIdHelp">
+          <input #EmployeeId="ngModel" [(ngModel)]="this.addEmployeeId" name="addEmployeeId" type="number"
+            class="form-control" id="employeeId" aria-describedby="employeeIdHelp" required>
           <div id="employeeIdHelp" class="form-text">ID of employee</div>
         </div>
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" aria-describedby="nameHelp">
+          <input type="text" class="form-control" #EmployeeName="ngModel" [(ngModel)]="this.addEmployeeName"
+            name="addEmployeeName" id="name" aria-describedby="nameHelp" required>
           <div id="nameHelp" class="form-text">Full Name of employee</div>
         </div>
         <div class="mb-3">
           <label for="designation" class="form-label">Designation</label>
-          <input type="text" class="form-control" id="designation" aria-describedby="designationHelp">
+          <input type="text" class="form-control" id="designation" #EmployeeDesignation="ngModel"
+            [(ngModel)]="this.addEmployeeDesignation" name="addEmployeeName" aria-describedby="designationHelp"
+            required>
           <div id="designationHelp" class="form-text">Designation of employee</div>
         </div>
-        <button type="submit" class="btn btn-primary">Add Employee</button>
+        <button type="submit" [disabled]="!(this.chainService.isWhiteListed && this.AddForm.valid)"
+          class="btn btn-primary">Add Employee</button>
       </form>
     </div>
     <div class="col">
-      <form>
+      <form #CheckInOutForm="ngForm">
         <h4>Checkin/Checkout Employees</h4>
         <div class="mb-3">
           <label for="employeeId" class="form-label">Employee Id</label>
-          <input type="number" class="form-control" id="employeeId" aria-describedby="employeeIdHelp">
+          <input [(ngModel)]="this.checkInOutEmployeeId" name="checkInOutEmployeeId" type="number" class="form-control" id="employeeId" aria-describedby="employeeIdHelp" required>
           <div id="employeeIdHelp" class="form-text">ID of employee</div>
         </div>
 
-        <button type="submit" class="btn btn-success me-3">Check In</button>
-        <button type="submit" class="btn btn-warning">Check Out</button>
+        <button type="button" (click)="this.checkIn()"
+          [disabled]="!(this.chainService.isWhiteListed && this.CheckInOutForm.valid)"
+          class="btn btn-success me-3">Check In</button>
+        <button type="button" (click)="this.checkOut()"
+          [disabled]="!(this.chainService.isWhiteListed && this.CheckInOutForm.valid)" class="btn btn-warning">Check
+          Out</button>
       </form>
     </div>
     <div class="col">
-      <form class="mb-4">
+      <form #getLogsForm="ngForm" class="mb-4" (ngSubmit)="this.getLogs()">
         <h4>Check Log</h4>
         <div class="mb-3">
           <label for="employeeId" class="form-label">Employee Id</label>
-          <input type="number" class="form-control" id="employeeId" aria-describedby="employeeIdHelp">
+          <input [(ngModel)]="this.getLogsId" name="getLogsId" type="number" class="form-control" id="employeeId" aria-describedby="employeeIdHelp" required>
           <div id="employeeIdHelp" class="form-text">ID of employee</div>
         </div>
-        <button type="submit" class="btn btn-primary">Check Log</button>
+        <button [disabled]="this.getLogsForm.invalid" type="submit" class="btn btn-primary">Check Log</button>
       </form>
       <hr>
 
-      <div class="card">
+      <div *ngFor="let log of this.logs" class="card mb-1">
         <div class="card-body">
-          <p class="card-text text-success">Check In</p>
+          <p *ngIf="log.returnValues.checkin; else CHECKOUT" class="card-text text-success">Check In</p>
+          <ng-template #CHECKOUT>
+            <p class="card-text text-danger">Check Out</p>
+          </ng-template>
         </div>
         <div class="card-footer text-muted">
-          3:30 am
+          {{log.returnValues.timestamp * 1000 | date : 'medium'}}<br>
+          <small>Txn Hash: <code>{{log.transactionHash}}</code></small>
         </div>
       </div>
 
-      <div class="card mt-1">
-        <div class="card-body">
-          <p class="card-text text-warning">Check Out</p>
-        </div>
-        <div class="card-footer text-muted">
-          3:40 am
-        </div>
-      </div>
+
     </div>
   </div>
 </div>
-

@@ -1,3 +1,4 @@
+import { SwalHelper } from './swal-helper';
 import { ChainService } from './chain.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
@@ -7,7 +8,13 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'satma-tracability-frontend';
+  public addEmployeeId: number = 1
+  public addEmployeeName: string = ""
+  public addEmployeeDesignation: string = ""
+  public checkInOutEmployeeId: number = 1;
+  public getLogsId: number = 1;
+
+  public logs: any[] = [];
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -20,6 +27,49 @@ export class AppComponent implements OnInit {
 
     ).subscribe(account => {
       this.changeDetector.detectChanges()
+    })
+
+    this.chainService.newLogAvailable$.subscribe(newLog => {
+      this.logs.unshift(newLog)
+    })
+  }
+
+  public addEmployee() {
+    this.chainService.addEmployee(this.addEmployeeId, this.addEmployeeName, this.addEmployeeDesignation)
+      .then(success => {
+        SwalHelper.showSuccessSwal("Saved", `Txn Hash: ${success.transactionHash}`)
+      })
+      .catch(err => {
+        SwalHelper.showErrorSwal(err.message)
+      })
+  }
+
+  public checkIn() {
+    this.chainService.checkInEmployee(this.checkInOutEmployeeId)
+      .then(success => {
+        SwalHelper.showSuccessSwal("Saved", `Txn Hash: ${success.transactionHash}`)
+      })
+      .catch(err => {
+        SwalHelper.showErrorSwal(err.message)
+      })
+  }
+
+  public checkOut() {
+    this.chainService.checkOutEmployee(this.checkInOutEmployeeId)
+      .then(success => {
+        SwalHelper.showSuccessSwal("Saved", `Txn Hash: ${success.transactionHash}`)
+      })
+      .catch(err => {
+        SwalHelper.showErrorSwal(err.message)
+      })
+  }
+
+  public getLogs() {
+    this.chainService.getLogs(this.getLogsId).then(logs => {
+      this.logs = logs;
+      this.logs.reverse()
+    }).catch(err => {
+      SwalHelper.showErrorSwal(err.message)
     })
   }
 

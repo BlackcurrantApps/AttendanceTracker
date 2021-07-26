@@ -19,6 +19,7 @@ export class ChainService implements OnInit{
   public selectedAccount: string = "";
   public contractOwnerAddress: string = "";
   public selectedAccount$: Subject<string> = new Subject();
+  public newLogAvailable$: Subject<any> = new Subject();
   public isWhiteListed = false;
 
 
@@ -41,6 +42,7 @@ export class ChainService implements OnInit{
     let ownerAddress = await this.EmployeeContract.methods.owner().call();
     this.contractOwnerAddress = ownerAddress;
     await this.determineWhitelist(this.selectedAccount);
+    await this.getLogs(1)
   }
 
   private initAccount(address: string) {
@@ -62,8 +64,52 @@ export class ChainService implements OnInit{
   }
 
   private async determineWhitelist(address: string) {
-    console.log('calling determine')
     let isWL = await this.EmployeeContract.methods.whitelist(address).call();
-    console.log(isWL)
+    this.isWhiteListed = isWL;
+  }
+
+  public async addEmployee(id: number, name: string, designation: string) {
+    let result = await this.EmployeeContract.methods.addEmployee(id, name, designation).send();
+    console.log(result);
+    return result
+  }
+
+  public async checkInEmployee(id: number) {
+    let result = await this.EmployeeContract.methods.recordAttendance(id, true).send();
+    console.log(result);
+    return result
+  }
+
+  public async checkOutEmployee(id: number) {
+    let result = await this.EmployeeContract.methods.recordAttendance(id, false).send();
+    console.log(result);
+    return result
+  }
+
+  public async getLogs(id: number) {
+    let events = await this.EmployeeContract.getPastEvents('AttendanceLog', {
+      filter: {
+        employeeId: id,
+      },
+      fromBlock: 0,
+    })
+    this.setupListener(id);
+    return events;
+  }
+
+  private updateListener: any;
+
+  public setupListener(id: number) {
+    this.updateListener = this.EmployeeContract.events.AttendanceLog({
+      filter: {
+        employeeId: id,
+      },
+    })
+
+    this.updateListener.on('data', (newLog: any)=> {
+      this.newLogAvailable$.next(newLog);
+    })
+
+    this.updateListener.on('error', console.log)
   }
 }
