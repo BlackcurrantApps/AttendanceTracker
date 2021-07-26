@@ -13,6 +13,8 @@ export class AppComponent implements OnInit {
   public addEmployeeDesignation: string = ""
   public checkInOutEmployeeId: number = 1;
   public getLogsId: number = 1;
+  public getEmployeeId: number = 1;
+  public employee: any = null;
 
   public logs: any[] = [];
 
@@ -69,6 +71,16 @@ export class AppComponent implements OnInit {
       this.logs = logs;
       this.logs.reverse()
     }).catch(err => {
+      SwalHelper.showErrorSwal(err.message)
+    })
+  }
+
+  public getEmployee(empId: number) {
+    this.chainService.getEmployee(empId).then(emp => {
+      this.employee = emp;
+      console.log(this.employee)
+    })
+    .catch(err => {
       SwalHelper.showErrorSwal(err.message)
     })
   }

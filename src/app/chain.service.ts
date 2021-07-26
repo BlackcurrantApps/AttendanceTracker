@@ -112,4 +112,8 @@ export class ChainService implements OnInit{
 
     this.updateListener.on('error', console.log)
   }
+
+  public async getEmployee(id: number) {
+    return await this.EmployeeContract.methods.employees(id).call();
+  }
 }

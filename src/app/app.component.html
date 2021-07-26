@@ -61,6 +61,36 @@
           [disabled]="!(this.chainService.isWhiteListed && this.CheckInOutForm.valid)" class="btn btn-warning">Check
           Out</button>
       </form>
+      <hr class="m-4">
+      <form>
+        <form #GetEmployee="ngForm">
+          <h4>Get Employee Details</h4>
+          <div class="mb-3">
+            <label for="employeeId" class="form-label">Employee Id</label>
+            <input #GetEmpId="ngModel" [(ngModel)]="this.getEmployeeId" name="getEmployeeId" type="number" class="form-control" id="employeeId" aria-describedby="employeeIdHelp" required>
+            <div id="employeeIdHelp" class="form-text">ID of employee</div>
+          </div>
+
+          <button type="button" (click)="this.getEmployee(this.GetEmpId.value)"
+            [disabled]="this.GetEmployee.invalid"
+            class="btn btn-success me-3">Get Details</button>
+        </form>
+      </form>
+
+      <div *ngIf="this.employee" class="card mt-4">
+        <div class="card-header">
+          Employee Details`
+        </div>
+        <div class="card-body">
+          <h4 *ngIf="this.employee.employeeName" class="card-title">{{this.employee.employeeName}}</h4>
+          <h4 *ngIf="!this.employee.exists">Not Found</h4>
+          <p class="card-text">{{this.employee.designation}}</p>
+        </div>
+        <div class="card-footer text-muted">
+          Added At: {{this.employee.addedAt * 1000 | date : 'medium'}}
+        </div>
+      </div>
+
     </div>
     <div class="col">
       <form #getLogsForm="ngForm" class="mb-4" (ngSubmit)="this.getLogs()">
