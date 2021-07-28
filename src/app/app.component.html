@@ -20,7 +20,7 @@
 <div class="container">
   <div class="row mt-4">
     <div class="col">
-      <form #AddForm="ngForm" (ngSubmit)="this.addEmployee()">
+      <form #AddForm="ngForm" (ngSubmit)="this.addEmployee()" class="mb-4">
         <h4>Add Employee</h4>
         <div class="mb-3">
           <label for="employeeId" class="form-label">Employee Id</label>
@@ -44,24 +44,7 @@
         <button type="submit" [disabled]="!(this.chainService.isWhiteListed && this.AddForm.valid)"
           class="btn btn-primary">Add Employee</button>
       </form>
-    </div>
-    <div class="col">
-      <form #CheckInOutForm="ngForm">
-        <h4>Checkin/Checkout Employees</h4>
-        <div class="mb-3">
-          <label for="employeeId" class="form-label">Employee Id</label>
-          <input [(ngModel)]="this.checkInOutEmployeeId" name="checkInOutEmployeeId" type="number" class="form-control" id="employeeId" aria-describedby="employeeIdHelp" required>
-          <div id="employeeIdHelp" class="form-text">ID of employee</div>
-        </div>
 
-        <button type="button" (click)="this.checkIn()"
-          [disabled]="!(this.chainService.isWhiteListed && this.CheckInOutForm.valid)"
-          class="btn btn-success me-3">Check In</button>
-        <button type="button" (click)="this.checkOut()"
-          [disabled]="!(this.chainService.isWhiteListed && this.CheckInOutForm.valid)" class="btn btn-warning">Check
-          Out</button>
-      </form>
-      <hr class="m-4">
       <form>
         <form #GetEmployee="ngForm">
           <h4>Get Employee Details</h4>
@@ -90,6 +73,25 @@
           Added At: {{this.employee.addedAt * 1000 | date : 'medium'}}
         </div>
       </div>
+    </div>
+    <div class="col">
+      <form #CheckInOutForm="ngForm">
+        <h4>Checkin/Checkout Employees</h4>
+        <div class="mb-3">
+          <label for="employeeId" class="form-label">Employee Id</label>
+          <input [(ngModel)]="this.checkInOutEmployeeId" name="checkInOutEmployeeId" type="number" class="form-control" id="employeeId" aria-describedby="employeeIdHelp" required>
+          <div id="employeeIdHelp" class="form-text">ID of employee</div>
+        </div>
+
+        <button type="button" (click)="this.checkIn()"
+          [disabled]="!(this.chainService.isWhiteListed && this.CheckInOutForm.valid)"
+          class="btn btn-success me-3">Check In</button>
+        <button type="button" (click)="this.checkOut()"
+          [disabled]="!(this.chainService.isWhiteListed && this.CheckInOutForm.valid)" class="btn btn-warning">Check
+          Out</button>
+      </form>
+      <hr class="m-4">
+
 
     </div>
     <div class="col">
@@ -113,7 +115,10 @@
         </div>
         <div class="card-footer text-muted">
           {{log.returnValues.timestamp * 1000 | date : 'medium'}}<br>
-          <small>Txn Hash: <code>{{log.transactionHash}}</code></small>
+          <small>Txn Hash: View on BSC SCAN<br>
+            <code>
+              <a href="https://testnet.bscscan.com/tx/{{log.transactionHash}}">{{log.transactionHash}}</a>
+            </code></small>
         </div>
       </div>
 

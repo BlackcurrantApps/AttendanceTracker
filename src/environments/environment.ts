@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  BLOCKCHAIN_ENDPOINT: "http://localhost:9545",
-  BLOCKCHAIN_CHAIN_ID: 5777,
-  CONTRACT_ADDRESS: "0x537e63609E3a513aB031131a87F9b9CFcD522781",
+  BLOCKCHAIN_ENDPOINT: "https://data-seed-prebsc-1-s1.binance.org:8545",
+  BLOCKCHAIN_CHAIN_ID: 97,
+  CONTRACT_ADDRESS: "0xC9b7E44316F18Ab817137a66209f20256C804523",
 };
 
 /*

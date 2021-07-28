@@ -33,6 +33,49 @@ export class ABI {
     {
       "inputs": [
         {
+          "internalType": "address",
+          "name": "newAddress",
+          "type": "address"
+        }
+      ],
+      "name": "addAddressToWhitelist",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "employeeId",
+          "type": "uint32"
+        },
+        {
+          "internalType": "string",
+          "name": "employeeName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "designation",
+          "type": "string"
+        }
+      ],
+      "name": "addEmployee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "destroy",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "uint32",
           "name": "",
           "type": "uint32"
@@ -67,8 +110,7 @@ export class ABI {
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -81,38 +123,22 @@ export class ABI {
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "whitelist",
-      "outputs": [
+          "internalType": "uint32",
+          "name": "employeeId",
+          "type": "uint32"
+        },
         {
           "internalType": "bool",
-          "name": "",
+          "name": "checkin",
           "type": "bool"
         }
       ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "newAddress",
-          "type": "address"
-        }
-      ],
-      "name": "addAddressToWhitelist",
+      "name": "recordAttendance",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -146,49 +172,20 @@ export class ABI {
     {
       "inputs": [
         {
-          "internalType": "uint32",
-          "name": "employeeId",
-          "type": "uint32"
-        },
-        {
-          "internalType": "string",
-          "name": "employeeName",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "designation",
-          "type": "string"
+          "internalType": "address",
+          "name": "",
+          "type": "address"
         }
       ],
-      "name": "addEmployee",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "employeeId",
-          "type": "uint32"
-        },
+      "name": "whitelist",
+      "outputs": [
         {
           "internalType": "bool",
-          "name": "checkin",
+          "name": "",
           "type": "bool"
         }
       ],
-      "name": "recordAttendance",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "destroy",
-      "outputs": [],
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "type": "function"
     }
   ]
