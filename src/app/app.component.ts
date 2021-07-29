@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { SwalHelper } from './swal-helper';
 import { ChainService } from './chain.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
@@ -15,6 +16,7 @@ export class AppComponent implements OnInit {
   public getLogsId: number = 1;
   public getEmployeeId: number = 1;
   public employee: any = null;
+  public environment = environment;
 
   public logs: any[] = [];
 

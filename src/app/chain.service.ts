@@ -91,7 +91,8 @@ export class ChainService implements OnInit{
       filter: {
         employeeId: id,
       },
-      fromBlock: 0,
+      fromBlock: 16950883,
+      toBlock: 'latest'
     })
     this.setupListener(id);
     return events;

@@ -117,7 +117,7 @@
           {{log.returnValues.timestamp * 1000 | date : 'medium'}}<br>
           <small>Txn Hash: View on BSC SCAN<br>
             <code>
-              <a href="https://testnet.bscscan.com/tx/{{log.transactionHash}}">{{log.transactionHash}}</a>
+              <a href="{{environment.BLOCK_EXPLORER_URL}}/tx/{{log.transactionHash}}">{{log.transactionHash}}</a>
             </code></small>
         </div>
       </div>
