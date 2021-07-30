@@ -12,7 +12,8 @@
         </li>
       </ul>
       <div class="d-flex">
-        <code>Active Account: {{this.chainService.selectedAccount}}</code>
+        <code>Contract Address: <a href="{{this.environment.BLOCK_EXPLORER_URL}}/address/{{this.environment.CONTRACT_ADDRESS}}">{{this.environment.CONTRACT_ADDRESS}}</a></code>&nbsp;&nbsp;&nbsp;
+        <code>Active Account: <a href="{{this.environment.BLOCK_EXPLORER_URL}}/address/{{this.chainService.selectedAccount}}">{{this.chainService.selectedAccount}}</a></code>
       </div>
     </div>
   </div>
